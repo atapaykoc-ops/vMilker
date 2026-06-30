@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hacim">
+<meta name="theme-color" content="#0a0e14">
+<title>Hacim · OKX</title>
+<style>
+  :root{
+    --bg:#0a0e14;--panel:#0f1620;--panel-2:#131b27;--line:#1e2a3a;
+    --text:#e6edf6;--muted:#5d6b80;--muted-2:#3a4658;
+    --live:#2fe08a;--warm:#f0a830;--hot:#ff5a5f;
+    --r-hot:#ff5a5f;--r-high:#2fe08a;--r-mid:#8b97a8;--r-low:#5d6b80;
+    --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior-y:contain}
+  body{padding-top:var(--safe-top);min-height:100vh}
+
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(10,14,20,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:14px 18px 12px}
+  .topbar-row{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:9px}
+  .brand .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live);animation:beat 2s infinite}
+  .brand h1{font-size:17px;font-weight:700;letter-spacing:-.2px}
+  .brand .ex{font-size:11px;color:var(--muted);font-weight:500;margin-top:1px}
+  .refresh{width:38px;height:38px;border-radius:11px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;transition:transform .3s,background .15s}
+  .refresh:active{background:var(--line);transform:scale(.92)}
+  .refresh.spin svg{animation:spin .8s linear infinite}
+  .updated{font-size:11px;color:var(--muted-2);margin-top:8px;font-variant-numeric:tabular-nums}
+
+  .seg{display:flex;gap:6px;margin-top:11px}
+  .seg button{flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;color:var(--muted);padding:8px 4px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+  .seg button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+  .tf-seg{display:flex;gap:6px;margin-top:8px}
+  .tf-seg button{flex:1;background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--muted);padding:6px 4px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer}
+  .tf-seg button.on{background:var(--panel-2);color:var(--text)}
+
+  .search-wrap{padding:0 12px;margin-top:10px}
+  .search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 14px;color:var(--text);font-size:15px;outline:none;font-family:inherit}
+  .search::placeholder{color:var(--muted-2)}
+
+  .list{padding:10px 12px calc(20px + var(--safe-bot))}
+  .card{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 15px 13px 18px;margin-bottom:8px;transition:background .15s}
+  .card:active{background:var(--panel-2)}
+  .card .edge{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .card-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .rank{font-size:12px;font-weight:700;color:var(--muted);min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
+  .rank.top{color:var(--warm)}
+  .sym{font-size:16px;font-weight:700;letter-spacing:-.2px;flex:1}
+  .pair{font-size:10px;color:var(--muted-2);font-weight:500}
+  .badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:7px;font-variant-numeric:tabular-nums}
+
+  .tfrows{display:flex;flex-direction:column;gap:5px}
+  .tfrow{display:flex;align-items:center;gap:8px;font-size:12px;font-variant-numeric:tabular-nums}
+  .tfrow .ic{width:18px;font-size:11px;color:var(--muted)}
+  .tfrow .vol{font-weight:600;color:var(--text);min-width:62px}
+  .tfrow .devs{display:flex;gap:10px;color:var(--muted);margin-left:auto}
+  .tfrow .dev b{font-weight:700}
+  .pos{color:var(--r-high)}.neg{color:var(--r-low)}.big{color:var(--hot)}
+
+  .state{padding:60px 30px;text-align:center;color:var(--muted)}
+  .state .ic{font-size:34px;margin-bottom:14px}
+  .state .msg{font-size:14px;line-height:1.5}
+  .state .sub{font-size:12px;color:var(--muted-2);margin-top:8px;line-height:1.5}
+  .skel{height:96px;background:linear-gradient(90deg,var(--panel) 25%,var(--panel-2) 50%,var(--panel) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:14px;margin-bottom:8px}
+
+  .foot{padding:8px 24px calc(24px + var(--safe-bot));text-align:center;font-size:11px;color:var(--muted-2);line-height:1.6}
+
+  @keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  @media (prefers-reduced-motion:reduce){.brand .pulse,.refresh.spin svg,.skel{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-row">
+    <div class="brand">
+      <span class="pulse"></span>
+      <div><h1>Hacim</h1><div class="ex">OKX · Altcoin/USDT</div></div>
+    </div>
+    <button class="refresh" id="refresh" aria-label="Yenile">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+  </div>
+  <div class="updated" id="updated">Yükleniyor…</div>
+  <div class="seg" id="seg">
+    <button data-s="chg" class="on">Hacim Artışı</button>
+    <button data-s="vol">Hacim</button>
+  </div>
+  <div class="tf-seg" id="tfseg">
+    <button data-tf="1h">1 saat</button>
+    <button data-tf="4h" class="on">4 saat</button>
+    <button data-tf="1d">Günlük</button>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <input class="search" id="search" placeholder="Coin ara…" autocomplete="off" autocapitalize="characters">
+</div>
+
+<div class="list" id="list">
+  <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+</div>
+
+<div class="foot">
+  Hacimler USD · H = haftalık ort'dan, A = aylık ort'dan sapma<br>
+  Saat başı güncellenir · Yüksek hacim = büyük hareket işareti, al sinyali değil
+</div>
+
+<script>
+// Veri kaynağı: aynı klasördeki veri.json (GitHub Actions saat başı günceller)
+const DATA_URL = 'veri.json';
+let DATA = [];
+let sortMode = 'chg';   // chg = seçili TF'de hacim artışı, vol = ham hacim
+let activeTF = '4h';
+let search = '';
+
+function fmtVol(n){
+  if(n>=1e9) return '$'+(n/1e9).toFixed(2)+'B';
+  if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
+  return '$'+(n||0).toFixed(0);
+}
+function dev(cur, avg){  // ortalamadan % sapma
+  if(!avg || avg<=0) return null;
+  return (cur/avg - 1) * 100;
+}
+function devTxt(p){
+  if(p===null) return '–';
+  return (p>=0?'+':'')+p.toFixed(0)+'%';
+}
+function devCls(p){
+  if(p===null) return '';
+  if(p>=100) return 'big';
+  if(p>=0) return 'pos';
+  return 'neg';
+}
+
+async function fetchData(){
+  const btn = document.getElementById('refresh');
+  btn.classList.add('spin');
+  try{
+    const r = await fetch(DATA_URL + '?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j = await r.json();
+    DATA = j.coins || [];
+    document.getElementById('updated').textContent =
+      'Güncellendi · ' + (j.updated||'?') + ' · ' + DATA.length + ' coin';
+    render();
+  }catch(e){
+    showError(e);
+  }finally{
+    btn.classList.remove('spin');
+  }
+}
+
+function render(){
+  let d = DATA.filter(x => x.tf && x.tf[activeTF]);
+  if(search) d = d.filter(x => x.c.toLowerCase().includes(search));
+
+  const wkDev = x => { const s=x.tf[activeTF]; return dev(s.cur, s.wk) ?? -9999; };
+  if(sortMode==='chg') d.sort((a,b)=> wkDev(b) - wkDev(a));
+  else d.sort((a,b)=> (b.tf[activeTF].cur||0) - (a.tf[activeTF].cur||0));
+
+  d = d.slice(0, 50);
+
+  const list = document.getElementById('list');
+  if(d.length===0){
+    list.innerHTML = '<div class="state"><div class="ic">🔍</div><div class="msg">Eşleşen coin yok</div></div>';
+    return;
+  }
+
+  const tfIcon = {'1h':'⏱','4h':'⏱','1d':'📅'};
+  const tfName = {'1h':'1s','4h':'4h','1d':'1g'};
+
+  list.innerHTML = d.map((x,i)=>{
+    const s = x.tf[activeTF];
+    const wp = dev(s.cur, s.wk);
+    const edge = wp===null ? 'var(--r-mid)' : wp>=100 ? 'var(--r-hot)' : wp>=20 ? 'var(--r-high)' : wp>=-20 ? 'var(--r-mid)' : 'var(--r-low)';
+    const badgeBg = wp===null ? 'var(--panel-2)' : wp>=100 ? 'rgba(255,90,95,.18)' : wp>=20 ? 'rgba(47,224,138,.16)' : 'var(--panel-2)';
+    const badgeCol = wp===null ? 'var(--muted)' : wp>=100 ? 'var(--hot)' : wp>=20 ? 'var(--live)' : 'var(--muted)';
+
+    // 3 TF satırı (her zaman 1h/4h/1d göster, seçili olanı vurgula)
+    const rows = ['1h','4h','1d'].map(tf=>{
+      const t = x.tf[tf]; if(!t) return '';
+      const w = dev(t.cur, t.wk), m = dev(t.cur, t.mo);
+      const hl = tf===activeTF ? 'style="color:var(--text)"' : '';
+      return `<div class="tfrow" ${hl}>
+        <span class="ic">${tfIcon[tf]}</span>
+        <span class="vol">${fmtVol(t.cur)}</span>
+        <span class="devs">
+          <span class="dev">H <b class="${devCls(w)}">${devTxt(w)}</b></span>
+          <span class="dev">A <b class="${devCls(m)}">${devTxt(m)}</b></span>
+        </span>
+      </div>`;
+    }).join('');
+
+    return `<div class="card">
+      <span class="edge" style="background:${edge}"></span>
+      <div class="card-head">
+        <span class="rank ${i<3?'top':''}">${i+1}</span>
+        <span class="sym">${x.c}<span class="pair"> /USDT</span></span>
+        <span class="badge" style="background:${badgeBg};color:${badgeCol}">${tfName[activeTF]} ${devTxt(wp)}</span>
+      </div>
+      <div class="tfrows">${rows}</div>
+    </div>`;
+  }).join('');
+}
+
+function showError(err){
+  document.getElementById('list').innerHTML =
+    `<div class="state"><div class="ic">⚠️</div>
+     <div class="msg">Veri yüklenemedi</div>
+     <div class="sub">veri.json okunamadı. Henüz oluşturulmamış olabilir<br>(ilk güncellemeyi bekliyor) ya da bağlantı sorunu var.<br><br>${err?('('+err.message+')'):''}</div></div>`;
+  document.getElementById('updated').textContent = 'Yüklenemedi';
+}
+
+document.getElementById('refresh').addEventListener('click', fetchData);
+document.getElementById('seg').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); sortMode=b.dataset.s; render();
+});
+document.getElementById('tfseg').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#tfseg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); activeTF=b.dataset.tf; render();
+});
+document.getElementById('search').addEventListener('input', e=>{
+  search=e.target.value.toLowerCase().trim(); render();
+});
+
+fetchData();
+setInterval(fetchData, 120000); // 2 dakikada bir JSON'u tekrar oku (uygulama açıkken)
+</script>
+</body>
+</html>
