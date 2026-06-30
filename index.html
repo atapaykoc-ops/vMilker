@@ -288,11 +288,11 @@ document.getElementById('search').addEventListener('input', e=>{
 // ===== İşlem paneli (kart tıklama → OKX'e yönlendirme) =====
 const sheet = document.getElementById('sheet');
 const sheetBg = document.getElementById('sheetBg');
+let curCoin = '';
 
 function openSheet(coin){
+  curCoin = coin;
   document.getElementById('sheetSym').textContent = coin;
-  document.getElementById('actSpot').href = `https://www.okx.com/trade-spot/${coin}-USDT`;
-  document.getElementById('actLev').href  = `https://www.okx.com/trade-swap/${coin}-USDT-SWAP`;
   sheetBg.classList.add('open');
   sheet.classList.add('open');
 }
@@ -300,6 +300,37 @@ function closeSheet(){
   sheetBg.classList.remove('open');
   sheet.classList.remove('open');
 }
+
+// OKX'i aç: önce uygulama (okx://) dene, açılmazsa web'e düş
+function openOKX(kind){
+  const cl = curCoin.toLowerCase();
+  const path = kind==='spot' ? `trade-spot/${cl}-usdt` : `trade-swap/${cl}-usdt-swap`;
+  const deep = `okx://www.okx.com/${path}`;
+  const web  = `https://www.okx.com/${path}`;
+
+  // uygulama açılırsa sayfa arka plana gider (visibilitychange/blur tetiklenir)
+  let switched = false;
+  const onHide = () => { switched = true; };
+  document.addEventListener('visibilitychange', onHide, {once:true});
+  window.addEventListener('blur', onHide, {once:true});
+
+  // deep link'i tetikle
+  window.location.href = deep;
+
+  // 1.2 sn içinde uygulamaya geçilmediyse web'e düş
+  setTimeout(() => {
+    document.removeEventListener('visibilitychange', onHide);
+    window.removeEventListener('blur', onHide);
+    if (!switched && document.visibilityState === 'visible') {
+      window.open(web, '_blank');
+    }
+  }, 1200);
+
+  closeSheet();
+}
+
+document.getElementById('actSpot').addEventListener('click', e=>{ e.preventDefault(); openOKX('spot'); });
+document.getElementById('actLev').addEventListener('click', e=>{ e.preventDefault(); openOKX('lev'); });
 
 // kartlara tıklama (liste dinamik olduğu için olay delegasyonu)
 document.getElementById('list').addEventListener('click', e=>{
