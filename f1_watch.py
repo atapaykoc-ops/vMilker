@@ -26,6 +26,7 @@ BAR_MS                = 4 * 3600 * 1000
 EXCLUDE = {"BTC","ETH","USDC","DAI","TUSD","USDD","FDUSD","BUSD","WBTC","EURT"}
 
 OKX      = "https://www.okx.com/api/v5"
+DERIN_MS = 2 * 365 * 24 * 3600 * 1000            # backtest evreni şartı: >=2 yıl geçmiş
 TG_TOKEN = os.environ.get("TG_TOKEN", "")
 CHAT_ID  = os.environ.get("TG_CHAT", "481345337")
 LOG_YOL, STATE_YOL = "f1_log.json", "f1_state.json"
@@ -59,6 +60,15 @@ def mumlar(inst_id, limit=100):
             for r in d if r[8] == "1"]
     rows.sort()
     return rows
+
+def derin_mi(coin, inst, state, simdi):
+    """Coin >=2 yıl geçmişe sahip mi? (backtest popülasyonu) Bir kez ölçülür, hafızaya alınır."""
+    if state.get(f"yas:{coin}") is True: return True
+    d = get(f"{OKX}/market/history-candles?instId={inst}&bar=4H&after={simdi - DERIN_MS}&limit=1")
+    if d:
+        state[f"yas:{coin}"] = True
+        return True
+    return False
 
 def rmean(x, w, i):
     return sum(x[i - w + 1: i + 1]) / w
@@ -107,7 +117,7 @@ def ana():
     state = oku(STATE_YOL, {})
     state = {(k if ":" in k else f"donuk:{k}"): v for k, v in state.items()}   # eski format göçü
     log   = oku(LOG_YOL, [])
-    for e in log: e.setdefault("kural", "donuk")
+    for e in log: e.setdefault("kural", "donuk"); e.setdefault("derin", True)
     simdi = int(time.time() * 1000)
     yeni, kapanan = [], []
 
@@ -116,11 +126,14 @@ def ana():
         bars = mumlar(inst)
         if not bars: continue
         atesler = []
+        derin = None
         for kural, (mult, v1lo) in KURALLAR.items():
             s = f1_kontrol(bars, mult, v1lo)
             if s and s["ts"] - int(state.get(f"{kural}:{coin}", 0)) >= LA * BAR_MS:
                 state[f"{kural}:{coin}"] = s["ts"]
-                kayit = dict(kural=kural, coin=coin, giris_ts=s["ts"], giris=s["giris"], v1=s["v1"],
+                if derin is None: derin = derin_mi(coin, inst, state, simdi)
+                kayit = dict(kural=kural, coin=coin, derin=derin,
+                             giris_ts=s["ts"], giris=s["giris"], v1=s["v1"],
                              cikis_ts=s["ts"] + LA * BAR_MS, cikis=None, pnl=None)
                 log.append(kayit); atesler.append(kayit)
         if atesler: yeni.append(atesler)
@@ -146,7 +159,8 @@ def ana():
         k = grup[0]
         etiket = "+".join(g["kural"].upper() for g in grup)
         t = dt.datetime.fromtimestamp(k["giris_ts"]/1000, dt.timezone.utc).strftime("%d.%m %H:%M UTC")
-        tg(f"🔻 <b>F1 SİNYAL · {k['coin']}</b> [{etiket}]\n{t} · giriş {k['giris']}\n"
+        gen = "" if k.get("derin", True) else " · genç coin (sicil-dışı)"
+        tg(f"🔻 <b>F1 SİNYAL · {k['coin']}</b> [{etiket}]{gen}\n{t} · giriş {k['giris']}\n"
            f"zemin v1={k['v1']} · kağıt-short, 1 gün\n"
            f"https://www.okx.com/trade-swap/{k['coin'].lower()}-usdt-swap")
     for k in kapanan:
@@ -157,12 +171,14 @@ def ana():
     if biten and (yeni or kapanan):
         satir = []
         for kural in KURALLAR:
-            b = [e for e in biten if e["kural"] == kural]
-            if b:
-                satir.append(f"{kural.upper()}: {len(b)} işlem, {sum(e['pnl'] for e in b)*100:+.1f}%, "
-                             f"isabet %{sum(e['pnl']>0 for e in b)/len(b)*100:.0f}")
+            b = [e for e in biten if e["kural"] == kural and e.get("derin", True)]
+            g = sum(1 for e in biten if e["kural"] == kural and not e.get("derin", True))
+            if b or g:
+                oz = (f"{kural.upper()}: {len(b)} işlem, {sum(e['pnl'] for e in b)*100:+.1f}%, "
+                      f"isabet %{sum(e['pnl']>0 for e in b)/len(b)*100:.0f}") if b else f"{kural.upper()}: 0 işlem"
+                satir.append(oz + (f"  (+{g} genç, sicil-dışı)" if g else ""))
         tg("📒 F1 sicilleri\n" + "\n".join(satir))
-    say = {k: sum(1 for e in biten if e["kural"] == k) for k in KURALLAR}
+    say = {k: sum(1 for e in biten if e["kural"] == k and e.get("derin", True)) for k in KURALLAR}
     print(f"Yeni sinyal grubu: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: donuk {say['donuk']} / genis {say['genis']}")
     if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not (yeni or kapanan):
         tg(f"🟢 Gözcü canlı · evren {len(uni)} coin · sicil: donuk {say['donuk']} / genis {say['genis']} işlem")
