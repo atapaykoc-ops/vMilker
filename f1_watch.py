@@ -164,6 +164,8 @@ def ana():
         tg("📒 F1 sicilleri\n" + "\n".join(satir))
     say = {k: sum(1 for e in biten if e["kural"] == k) for k in KURALLAR}
     print(f"Yeni sinyal grubu: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: donuk {say['donuk']} / genis {say['genis']}")
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not (yeni or kapanan):
+        tg(f"🟢 Gözcü canlı · evren {len(uni)} coin · sicil: donuk {say['donuk']} / genis {say['genis']} işlem")
 
 if __name__ == "__main__":
     ana()
