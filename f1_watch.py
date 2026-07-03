@@ -9,14 +9,18 @@ Sonraki koşularda 1 günü dolan kağıt işlemlerin sonucunu kendisi doldurur
 (çıkış = 6 bar sonra kapanış; pnl = -(cikis/giris-1) - %0.15 maliyet+funding).
 Gerçek emir YOK, anahtar YOK. Bu dosya = F1'in canlı sicili.
 
-Sinyal aritmetiği backtest ile BİREBİR: MULT=3, CONSEC=6, BASE=42, REC=6,
-V1<0.75 (patlama-öncesi zemin, CONSEC kaydırmalı), cooldown=LA=6 bar.
+İKİ KURAL (v2):
+  donuk : MULT=3.0, V1<0.75  — orijinal, DONDURULMUŞ. Okuma eşiği: 10 işlem.
+  genis : MULT=2.5, V1<0.85  — M2-WFO doğrulamalı geniş ağ. Okuma eşiği: 20 işlem.
+Ortak: CONSEC=6, BASE=42, REC=6, cooldown=LA=6 bar (kural başına ayrı).
+Donuk sinyaller genişin alt kümesidir; ikisi ateşlerse tek mesaj, iki sicil kaydı.
+Eski format uyumu: etiketsiz eski kayıt/state "donuk" sayılır.
 """
 import json, os, time, urllib.request, urllib.parse, datetime as dt
 
 # ── ön-kayıtlı sabitler (backtest ile aynı) ──
 BASE, CONSEC, REC, LA = 42, 6, 6, 6
-MULT, V1_LO           = 3.0, 0.75
+KURALLAR = {"donuk": (3.0, 0.75), "genis": (2.5, 0.85)}
 FEE                   = 0.0015                    # %0.1 RT + %0.05 funding (hüküm senaryosu)
 BAR_MS                = 4 * 3600 * 1000
 EXCLUDE = {"BTC","ETH","USDC","DAI","TUSD","USDD","FDUSD","BUSD","WBTC","EURT"}
@@ -59,21 +63,21 @@ def mumlar(inst_id, limit=100):
 def rmean(x, w, i):
     return sum(x[i - w + 1: i + 1]) / w
 
-def f1_kontrol(bars):
-    """Son kapanmış barda F1 var mı? Varsa dict döner."""
+def f1_kontrol(bars, mult, v1_lo):
+    """Son kapanmış barda verilen kurala göre F1 var mı?"""
     n = len(bars)
     if n < BASE + CONSEC + 2: return None
     ts = [b[0] for b in bars]; c = [b[1] for b in bars]
     h  = [b[2] for b in bars]; l = [b[3] for b in bars]; vq = [b[4] for b in bars]
     i = n - 1
     for k in range(i - CONSEC + 1, i + 1):                 # ardışık 6 bar > 3x taban
-        if k - BASE + 1 < 0 or not vq[k] > MULT * rmean(vq, BASE, k):
+        if k - BASE + 1 < 0 or not vq[k] > mult * rmean(vq, BASE, k):
             return None
     j = i - CONSEC                                          # patlama-ÖNCESİ zemin
     if j - BASE + 1 < 0: return None
     rng = [max(h[k] - l[k], 0.0) / c[k] for k in range(n)]
     v1 = rmean(rng, REC, j) / max(rmean(rng, BASE, j), 1e-12)
-    if v1 < V1_LO:
+    if v1 < v1_lo:
         return dict(ts=ts[i], giris=c[i], v1=round(v1, 3))
     return None
 
@@ -101,20 +105,25 @@ def ana():
     uni = evren()
     print(f"Evren: {len(uni)} coin (spot∩perp)")
     state = oku(STATE_YOL, {})
+    state = {(k if ":" in k else f"donuk:{k}"): v for k, v in state.items()}   # eski format göçü
     log   = oku(LOG_YOL, [])
+    for e in log: e.setdefault("kural", "donuk")
     simdi = int(time.time() * 1000)
     yeni, kapanan = [], []
 
-    # 1) TARAMA
+    # 1) TARAMA (tek fetch, iki kural)
     for coin, inst in sorted(uni.items()):
         bars = mumlar(inst)
         if not bars: continue
-        s = f1_kontrol(bars)
-        if s and s["ts"] - int(state.get(coin, 0)) >= LA * BAR_MS:
-            state[coin] = s["ts"]
-            kayit = dict(coin=coin, giris_ts=s["ts"], giris=s["giris"], v1=s["v1"],
-                         cikis_ts=s["ts"] + LA * BAR_MS, cikis=None, pnl=None)
-            log.append(kayit); yeni.append(kayit)
+        atesler = []
+        for kural, (mult, v1lo) in KURALLAR.items():
+            s = f1_kontrol(bars, mult, v1lo)
+            if s and s["ts"] - int(state.get(f"{kural}:{coin}", 0)) >= LA * BAR_MS:
+                state[f"{kural}:{coin}"] = s["ts"]
+                kayit = dict(kural=kural, coin=coin, giris_ts=s["ts"], giris=s["giris"], v1=s["v1"],
+                             cikis_ts=s["ts"] + LA * BAR_MS, cikis=None, pnl=None)
+                log.append(kayit); atesler.append(kayit)
+        if atesler: yeni.append(atesler)
         time.sleep(0.12)
 
     # 2) SONUÇ DOLDURMA (1 günü dolan kağıt işlemler)
@@ -133,21 +142,28 @@ def ana():
     yaz(STATE_YOL, state); yaz(LOG_YOL, log)
 
     # 3) BİLDİRİM
-    for k in yeni:
+    for grup in yeni:
+        k = grup[0]
+        etiket = "+".join(g["kural"].upper() for g in grup)
         t = dt.datetime.fromtimestamp(k["giris_ts"]/1000, dt.timezone.utc).strftime("%d.%m %H:%M UTC")
-        tg(f"🔻 <b>F1 SİNYAL · {k['coin']}</b>\n{t} · giriş {k['giris']}\n"
+        tg(f"🔻 <b>F1 SİNYAL · {k['coin']}</b> [{etiket}]\n{t} · giriş {k['giris']}\n"
            f"zemin v1={k['v1']} · kağıt-short, 1 gün\n"
            f"https://www.okx.com/trade-swap/{k['coin'].lower()}-usdt-swap")
     for k in kapanan:
         isaret = "✅" if isinstance(k["pnl"], float) and k["pnl"] > 0 else "🔴"
-        tg(f"{isaret} <b>F1 SONUÇ · {k['coin']}</b>\npnl: {k['pnl']*100:+.2f}% (kağıt)"
-           if isinstance(k["pnl"], float) else f"⚪ F1 SONUÇ · {k['coin']}: veri yok")
+        tg(f"{isaret} <b>F1 SONUÇ · {k['coin']}</b> [{k['kural'].upper()}]\npnl: {k['pnl']*100:+.2f}% (kağıt)"
+           if isinstance(k["pnl"], float) else f"⚪ F1 SONUÇ · {k['coin']} [{k['kural'].upper()}]: veri yok")
     biten = [e for e in log if isinstance(e["pnl"], float)]
     if biten and (yeni or kapanan):
-        top = sum(e["pnl"] for e in biten)
-        tg(f"📒 F1 sicili: {len(biten)} işlem · toplam {top*100:+.1f}% · "
-           f"isabet %{sum(e['pnl']>0 for e in biten)/len(biten)*100:.0f}")
-    print(f"Yeni sinyal: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: {len(biten)} işlem")
+        satir = []
+        for kural in KURALLAR:
+            b = [e for e in biten if e["kural"] == kural]
+            if b:
+                satir.append(f"{kural.upper()}: {len(b)} işlem, {sum(e['pnl'] for e in b)*100:+.1f}%, "
+                             f"isabet %{sum(e['pnl']>0 for e in b)/len(b)*100:.0f}")
+        tg("📒 F1 sicilleri\n" + "\n".join(satir))
+    say = {k: sum(1 for e in biten if e["kural"] == k) for k in KURALLAR}
+    print(f"Yeni sinyal grubu: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: donuk {say['donuk']} / genis {say['genis']}")
 
 if __name__ == "__main__":
     ana()
