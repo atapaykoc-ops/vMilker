@@ -9,5 +9,16 @@
   "cikis_ts": 1783209600000,
   "cikis": null,
   "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "TRB",
+  "derin": true,
+  "giris_ts": 1783137600000,
+  "giris": 15.67,
+  "v1": 0.822,
+  "cikis_ts": 1783224000000,
+  "cikis": null,
+  "pnl": null
  }
 ]
