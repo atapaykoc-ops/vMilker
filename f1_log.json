@@ -1,1 +1,13 @@
-[]
+[
+ {
+  "kural": "genis",
+  "coin": "XTZ",
+  "derin": true,
+  "giris_ts": 1783123200000,
+  "giris": 0.2402,
+  "v1": 0.717,
+  "cikis_ts": 1783209600000,
+  "cikis": null,
+  "pnl": null
+ }
+]
