@@ -9,9 +9,12 @@ Sonraki koşularda 1 günü dolan kağıt işlemlerin sonucunu kendisi doldurur
 (çıkış = 6 bar sonra kapanış; pnl = -(cikis/giris-1) - %0.15 maliyet+funding).
 Gerçek emir YOK, anahtar YOK. Bu dosya = F1'in canlı sicili.
 
-İKİ KURAL (v2):
-  donuk : MULT=3.0, V1<0.75  — orijinal, DONDURULMUŞ. Okuma eşiği: 10 işlem.
-  genis : MULT=2.5, V1<0.85  — M2-WFO doğrulamalı geniş ağ. Okuma eşiği: 20 işlem.
+ÜÇ KURAL (v3):
+  donuk : MULT=3.0,  V1<0.75 — orijinal, DONDURULMUŞ. Okuma eşiği: 10 işlem.
+  genis : MULT=2.5,  V1<0.85 — WFO doğrulamalı geniş ağ. Okuma eşiği: 20 işlem.
+  ekstra: MULT=2.25, V1<0.85 — Hücre E (getiri hedefi, DD sınırı -%30) doğrulamalı
+          zarf kural. Okuma eşiği: 30 işlem. Beklenti: ~%62 isabet, ~+%1.2-1.5/işlem;
+          eksi yıllar ve -%15 çukur bu kuralın NORMALİDİR (2020, 2023 backtest).
 Ortak: CONSEC=6, BASE=42, REC=6, cooldown=LA=6 bar (kural başına ayrı).
 Donuk sinyaller genişin alt kümesidir; ikisi ateşlerse tek mesaj, iki sicil kaydı.
 Eski format uyumu: etiketsiz eski kayıt/state "donuk" sayılır.
@@ -20,7 +23,7 @@ import json, os, time, urllib.request, urllib.parse, datetime as dt
 
 # ── ön-kayıtlı sabitler (backtest ile aynı) ──
 BASE, CONSEC, REC, LA = 42, 6, 6, 6
-KURALLAR = {"donuk": (3.0, 0.75), "genis": (2.5, 0.85)}
+KURALLAR = {"donuk": (3.0, 0.75), "genis": (2.5, 0.85), "ekstra": (2.25, 0.85)}
 FEE                   = 0.0015                    # %0.1 RT + %0.05 funding (hüküm senaryosu)
 BAR_MS                = 4 * 3600 * 1000
 EXCLUDE = {"BTC","ETH","USDC","DAI","TUSD","USDD","FDUSD","BUSD","WBTC","EURT"}
@@ -151,6 +154,27 @@ def ana():
         e["cikis"] = cikis
         e["pnl"] = round(-(cikis / e["giris"] - 1) - FEE, 5)
         kapanan.append(e)
+    # GÖLGE-YÜRÜTME: limit+%1 girişin retrospektif sonucu (canlı-gün yürütme notu için veri)
+    for e in log:
+        if e.get("golge") is not None or e["pnl"] is None or not isinstance(e["pnl"], float): continue
+        inst = uni.get(e["coin"], f"{e['coin']}-USDT")
+        bars = mumlar(inst)
+        if not bars: continue
+        yol = [b for b in bars if b[0] > e["giris_ts"]]
+        if len(yol) < 12:
+            if simdi > e["giris_ts"] + 5 * 86400_000: e["golge"] = "VERI_YOK"
+            continue
+        lvl = e["giris"] * 1.01
+        g, k0 = None, None
+        for j in range(6):
+            ts_, c_, h_, l_, vq_ = yol[j]
+            o_ = yol[j-1][1] if j > 0 else e["giris"]        # yaklaşık açılış = önceki kapanış
+            if h_ >= lvl:
+                g, k0 = max(lvl, o_), j; break
+        if g is None:
+            e["golge"] = "DOLMADI"
+        else:
+            e["golge"] = round((g - yol[k0 + 5][1]) / g - FEE, 5)
 
     yaz(STATE_YOL, state); yaz(LOG_YOL, log)
 
@@ -179,9 +203,11 @@ def ana():
                 satir.append(oz + (f"  (+{g} genç, sicil-dışı)" if g else ""))
         tg("📒 F1 sicilleri\n" + "\n".join(satir))
     say = {k: sum(1 for e in biten if e["kural"] == k and e.get("derin", True)) for k in KURALLAR}
-    print(f"Yeni sinyal grubu: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: donuk {say['donuk']} / genis {say['genis']}")
+    print(f"Yeni sinyal grubu: {len(yeni)} | Kapanan: {len(kapanan)} | Sicil: " +
+          " / ".join(f"{k} {say[k]}" for k in KURALLAR))
     if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not (yeni or kapanan):
-        tg(f"🟢 Gözcü canlı · evren {len(uni)} coin · sicil: donuk {say['donuk']} / genis {say['genis']} işlem")
+        tg(f"🟢 Gözcü canlı · evren {len(uni)} coin · sicil: " +
+           " / ".join(f"{k} {say[k]}" for k in KURALLAR) + " işlem")
 
 if __name__ == "__main__":
     ana()
