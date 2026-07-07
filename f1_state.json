@@ -2,5 +2,8 @@
  "genis:XTZ": 1783123200000,
  "yas:XTZ": true,
  "genis:TRB": 1783137600000,
- "yas:TRB": true
+ "yas:TRB": true,
+ "genis:BLUR": 1783411200000,
+ "yas:BLUR": true,
+ "ekstra:BLUR": 1783411200000
 }
