@@ -44,5 +44,16 @@
   "cikis_ts": 1783497600000,
   "cikis": 0.01867,
   "pnl": 0.26892
+ },
+ {
+  "kural": "ekstra",
+  "coin": "MMT",
+  "derin": false,
+  "giris_ts": 1783512000000,
+  "giris": 0.1589,
+  "v1": 0.669,
+  "cikis_ts": 1783598400000,
+  "cikis": null,
+  "pnl": null
  }
 ]
