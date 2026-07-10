@@ -56,6 +56,18 @@
   "v1": 0.669,
   "cikis_ts": 1783598400000,
   "cikis": 0.166,
-  "pnl": -0.04618
+  "pnl": -0.04618,
+  "golge": 0.04454
+ },
+ {
+  "kural": "ekstra",
+  "coin": "RVN",
+  "derin": true,
+  "giris_ts": 1783684800000,
+  "giris": 0.004056,
+  "v1": 0.694,
+  "cikis_ts": 1783771200000,
+  "cikis": null,
+  "pnl": null
  }
 ]
