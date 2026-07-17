@@ -70,5 +70,38 @@
   "cikis": 0.003929,
   "pnl": 0.02981,
   "golge": "DOLMADI"
+ },
+ {
+  "kural": "donuk",
+  "coin": "LRC",
+  "derin": true,
+  "giris_ts": 1784275200000,
+  "giris": 0.0147,
+  "v1": 0.601,
+  "cikis_ts": 1784361600000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "LRC",
+  "derin": true,
+  "giris_ts": 1784275200000,
+  "giris": 0.0147,
+  "v1": 0.601,
+  "cikis_ts": 1784361600000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "LRC",
+  "derin": true,
+  "giris_ts": 1784275200000,
+  "giris": 0.0147,
+  "v1": 0.601,
+  "cikis_ts": 1784361600000,
+  "cikis": null,
+  "pnl": null
  }
 ]
