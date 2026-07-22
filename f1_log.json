@@ -106,5 +106,16 @@
   "cikis": 0.01403,
   "pnl": 0.04408,
   "golge": 0.05353
+ },
+ {
+  "kural": "ekstra",
+  "coin": "ONE",
+  "derin": true,
+  "giris_ts": 1784707200000,
+  "giris": 0.00135,
+  "v1": 0.61,
+  "cikis_ts": 1784793600000,
+  "cikis": null,
+  "pnl": null
  }
 ]
