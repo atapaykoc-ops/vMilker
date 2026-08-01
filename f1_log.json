@@ -154,5 +154,16 @@
   "cikis": 0.0005245,
   "pnl": -0.02372,
   "golge": -0.0136
+ },
+ {
+  "kural": "ekstra",
+  "coin": "OFC",
+  "derin": false,
+  "giris_ts": 1785556800000,
+  "giris": 0.01132,
+  "v1": 0.756,
+  "cikis_ts": 1785643200000,
+  "cikis": null,
+  "pnl": null
  }
 ]
