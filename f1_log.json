@@ -166,5 +166,27 @@
   "cikis": 0.011264,
   "pnl": 0.00345,
   "golge": 0.0133
+ },
+ {
+  "kural": "genis",
+  "coin": "BICO",
+  "derin": true,
+  "giris_ts": 1785758400000,
+  "giris": 0.01825,
+  "v1": 0.832,
+  "cikis_ts": 1785844800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "BICO",
+  "derin": true,
+  "giris_ts": 1785758400000,
+  "giris": 0.01825,
+  "v1": 0.832,
+  "cikis_ts": 1785844800000,
+  "cikis": null,
+  "pnl": null
  }
 ]
