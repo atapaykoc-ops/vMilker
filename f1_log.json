@@ -214,5 +214,16 @@
   "cikis": 1.318,
   "pnl": 0.01123,
   "golge": 0.02101
+ },
+ {
+  "kural": "ekstra",
+  "coin": "ARKM",
+  "derin": false,
+  "giris_ts": 1786075200000,
+  "giris": 0.0967,
+  "v1": 0.846,
+  "cikis_ts": 1786161600000,
+  "cikis": null,
+  "pnl": null
  }
 ]
