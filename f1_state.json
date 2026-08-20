@@ -23,8 +23,15 @@
  "yas:BICO": true,
  "ekstra:BICO": 1785758400000,
  "ekstra:AIXBT": 1785888000000,
- "ekstra:RENDER": 1785888000000,
+ "ekstra:RENDER": 1787212800000,
  "yas:RENDER": true,
  "ekstra:ARKM": 1786075200000,
- "ekstra:AVNT": 1786665600000
+ "ekstra:AVNT": 1786665600000,
+ "genis:ASTER": 1787212800000,
+ "ekstra:ASTER": 1787212800000,
+ "ekstra:GRASS": 1787212800000,
+ "genis:PEPE": 1787212800000,
+ "yas:PEPE": true,
+ "ekstra:PEPE": 1787212800000,
+ "genis:RENDER": 1787212800000
 }

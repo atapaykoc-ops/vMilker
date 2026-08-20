@@ -238,5 +238,82 @@
   "cikis": 0.10499,
   "pnl": 0.02384,
   "golge": 0.09379
+ },
+ {
+  "kural": "genis",
+  "coin": "ASTER",
+  "derin": false,
+  "giris_ts": 1787212800000,
+  "giris": 0.6607,
+  "v1": 0.697,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "ASTER",
+  "derin": false,
+  "giris_ts": 1787212800000,
+  "giris": 0.6607,
+  "v1": 0.697,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "GRASS",
+  "derin": false,
+  "giris_ts": 1787212800000,
+  "giris": 0.3088,
+  "v1": 0.845,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "PEPE",
+  "derin": true,
+  "giris_ts": 1787212800000,
+  "giris": 3.153e-06,
+  "v1": 0.839,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "PEPE",
+  "derin": true,
+  "giris_ts": 1787212800000,
+  "giris": 3.153e-06,
+  "v1": 0.839,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "RENDER",
+  "derin": true,
+  "giris_ts": 1787212800000,
+  "giris": 1.399,
+  "v1": 0.798,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "RENDER",
+  "derin": true,
+  "giris_ts": 1787212800000,
+  "giris": 1.399,
+  "v1": 0.798,
+  "cikis_ts": 1787299200000,
+  "cikis": null,
+  "pnl": null
  }
 ]
