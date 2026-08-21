@@ -247,8 +247,8 @@
   "giris": 0.6607,
   "v1": 0.697,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.7355,
+  "pnl": -0.11471
  },
  {
   "kural": "ekstra",
@@ -258,8 +258,8 @@
   "giris": 0.6607,
   "v1": 0.697,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.7355,
+  "pnl": -0.11471
  },
  {
   "kural": "ekstra",
@@ -269,8 +269,8 @@
   "giris": 0.3088,
   "v1": 0.845,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.3274,
+  "pnl": -0.06173
  },
  {
   "kural": "genis",
@@ -280,8 +280,8 @@
   "giris": 3.153e-06,
   "v1": 0.839,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.528e-06,
+  "pnl": -0.12043
  },
  {
   "kural": "ekstra",
@@ -291,8 +291,8 @@
   "giris": 3.153e-06,
   "v1": 0.839,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.528e-06,
+  "pnl": -0.12043
  },
  {
   "kural": "genis",
@@ -302,8 +302,8 @@
   "giris": 1.399,
   "v1": 0.798,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 1.47,
+  "pnl": -0.05225
  },
  {
   "kural": "ekstra",
@@ -313,7 +313,7 @@
   "giris": 1.399,
   "v1": 0.798,
   "cikis_ts": 1787299200000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 1.47,
+  "pnl": -0.05225
  }
 ]
