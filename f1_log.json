@@ -331,8 +331,8 @@
   "giris": 3.602,
   "v1": 0.53,
   "cikis_ts": 1788220800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.362,
+  "pnl": 0.06513
  },
  {
   "kural": "genis",
@@ -342,8 +342,8 @@
   "giris": 3.602,
   "v1": 0.53,
   "cikis_ts": 1788220800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.362,
+  "pnl": 0.06513
  },
  {
   "kural": "ekstra",
@@ -353,7 +353,7 @@
   "giris": 3.602,
   "v1": 0.53,
   "cikis_ts": 1788220800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.362,
+  "pnl": 0.06513
  }
 ]
