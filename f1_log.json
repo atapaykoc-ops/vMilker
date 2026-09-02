@@ -332,7 +332,8 @@
   "v1": 0.53,
   "cikis_ts": 1788220800000,
   "cikis": 3.362,
-  "pnl": 0.06513
+  "pnl": 0.06513,
+  "golge": "DOLMADI"
  },
  {
   "kural": "genis",
@@ -343,7 +344,8 @@
   "v1": 0.53,
   "cikis_ts": 1788220800000,
   "cikis": 3.362,
-  "pnl": 0.06513
+  "pnl": 0.06513,
+  "golge": "DOLMADI"
  },
  {
   "kural": "ekstra",
@@ -354,6 +356,7 @@
   "v1": 0.53,
   "cikis_ts": 1788220800000,
   "cikis": 3.362,
-  "pnl": 0.06513
+  "pnl": 0.06513,
+  "golge": "DOLMADI"
  }
 ]
