@@ -380,5 +380,82 @@
   "cikis_ts": 1788782400000,
   "cikis": null,
   "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "MET",
+  "derin": false,
+  "giris_ts": 1788710400000,
+  "giris": 0.2095,
+  "v1": 0.803,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "MET",
+  "derin": false,
+  "giris_ts": 1788710400000,
+  "giris": 0.2095,
+  "v1": 0.803,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "donuk",
+  "coin": "METIS",
+  "derin": true,
+  "giris_ts": 1788710400000,
+  "giris": 3.398,
+  "v1": 0.619,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "METIS",
+  "derin": true,
+  "giris_ts": 1788710400000,
+  "giris": 3.398,
+  "v1": 0.619,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "METIS",
+  "derin": true,
+  "giris_ts": 1788710400000,
+  "giris": 3.398,
+  "v1": 0.619,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "RAY",
+  "derin": true,
+  "giris_ts": 1788710400000,
+  "giris": 1.2524,
+  "v1": 0.838,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "RAY",
+  "derin": true,
+  "giris_ts": 1788710400000,
+  "giris": 1.2524,
+  "v1": 0.838,
+  "cikis_ts": 1788796800000,
+  "cikis": null,
+  "pnl": null
  }
 ]

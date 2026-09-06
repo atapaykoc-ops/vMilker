@@ -40,5 +40,14 @@
  "ekstra:AUCTION": 1788134400000,
  "genis:IOST": 1788696000000,
  "yas:IOST": true,
- "ekstra:IOST": 1788696000000
+ "ekstra:IOST": 1788696000000,
+ "genis:MET": 1788710400000,
+ "ekstra:MET": 1788710400000,
+ "donuk:METIS": 1788710400000,
+ "yas:METIS": true,
+ "genis:METIS": 1788710400000,
+ "ekstra:METIS": 1788710400000,
+ "genis:RAY": 1788710400000,
+ "yas:RAY": true,
+ "ekstra:RAY": 1788710400000
 }
