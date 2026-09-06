@@ -358,5 +358,27 @@
   "cikis": 3.362,
   "pnl": 0.06513,
   "golge": "DOLMADI"
+ },
+ {
+  "kural": "genis",
+  "coin": "IOST",
+  "derin": true,
+  "giris_ts": 1788696000000,
+  "giris": 0.0007163,
+  "v1": 0.675,
+  "cikis_ts": 1788782400000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "IOST",
+  "derin": true,
+  "giris_ts": 1788696000000,
+  "giris": 0.0007163,
+  "v1": 0.675,
+  "cikis_ts": 1788782400000,
+  "cikis": null,
+  "pnl": null
  }
 ]
