@@ -367,8 +367,8 @@
   "giris": 0.0007163,
   "v1": 0.675,
   "cikis_ts": 1788782400000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.0008852,
+  "pnl": -0.2373
  },
  {
   "kural": "ekstra",
@@ -378,8 +378,8 @@
   "giris": 0.0007163,
   "v1": 0.675,
   "cikis_ts": 1788782400000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.0008852,
+  "pnl": -0.2373
  },
  {
   "kural": "genis",
@@ -389,8 +389,8 @@
   "giris": 0.2095,
   "v1": 0.803,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.2004,
+  "pnl": 0.04194
  },
  {
   "kural": "ekstra",
@@ -400,8 +400,8 @@
   "giris": 0.2095,
   "v1": 0.803,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 0.2004,
+  "pnl": 0.04194
  },
  {
   "kural": "donuk",
@@ -411,8 +411,8 @@
   "giris": 3.398,
   "v1": 0.619,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.135,
+  "pnl": 0.0759
  },
  {
   "kural": "genis",
@@ -422,8 +422,8 @@
   "giris": 3.398,
   "v1": 0.619,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.135,
+  "pnl": 0.0759
  },
  {
   "kural": "ekstra",
@@ -433,8 +433,8 @@
   "giris": 3.398,
   "v1": 0.619,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 3.135,
+  "pnl": 0.0759
  },
  {
   "kural": "genis",
@@ -444,8 +444,8 @@
   "giris": 1.2524,
   "v1": 0.838,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 1.1668,
+  "pnl": 0.06685
  },
  {
   "kural": "ekstra",
@@ -455,7 +455,7 @@
   "giris": 1.2524,
   "v1": 0.838,
   "cikis_ts": 1788796800000,
-  "cikis": null,
-  "pnl": null
+  "cikis": 1.1668,
+  "pnl": 0.06685
  }
 ]
