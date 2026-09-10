@@ -466,5 +466,27 @@
   "cikis": 1.1668,
   "pnl": 0.06685,
   "golge": 0.07607
+ },
+ {
+  "kural": "genis",
+  "coin": "NES",
+  "derin": false,
+  "giris_ts": 1789056000000,
+  "giris": 0.1449,
+  "v1": 0.732,
+  "cikis_ts": 1789142400000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "NES",
+  "derin": false,
+  "giris_ts": 1789056000000,
+  "giris": 0.1449,
+  "v1": 0.732,
+  "cikis_ts": 1789142400000,
+  "cikis": null,
+  "pnl": null
  }
 ]

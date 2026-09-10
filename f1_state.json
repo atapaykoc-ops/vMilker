@@ -49,5 +49,7 @@
  "ekstra:METIS": 1788710400000,
  "genis:RAY": 1788710400000,
  "yas:RAY": true,
- "ekstra:RAY": 1788710400000
+ "ekstra:RAY": 1788710400000,
+ "genis:NES": 1789056000000,
+ "ekstra:NES": 1789056000000
 }
