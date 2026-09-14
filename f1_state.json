@@ -51,5 +51,7 @@
  "yas:RAY": true,
  "ekstra:RAY": 1788710400000,
  "genis:NES": 1789056000000,
- "ekstra:NES": 1789056000000
+ "ekstra:NES": 1789056000000,
+ "ekstra:FIL": 1789372800000,
+ "yas:FIL": true
 }
