@@ -502,5 +502,16 @@
   "cikis": 0.8744,
   "pnl": 0.12436,
   "golge": 0.13302
+ },
+ {
+  "kural": "ekstra",
+  "coin": "AEON",
+  "derin": false,
+  "giris_ts": 1789732800000,
+  "giris": 0.05631,
+  "v1": 0.819,
+  "cikis_ts": 1789819200000,
+  "cikis": null,
+  "pnl": null
  }
 ]

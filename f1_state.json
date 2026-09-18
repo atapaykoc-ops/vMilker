@@ -53,5 +53,6 @@
  "genis:NES": 1789056000000,
  "ekstra:NES": 1789056000000,
  "ekstra:FIL": 1789372800000,
- "yas:FIL": true
+ "yas:FIL": true,
+ "ekstra:AEON": 1789732800000
 }
