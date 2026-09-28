@@ -54,5 +54,8 @@
  "ekstra:NES": 1789056000000,
  "ekstra:FIL": 1789372800000,
  "yas:FIL": true,
- "ekstra:AEON": 1789732800000
+ "ekstra:AEON": 1789732800000,
+ "genis:GRT": 1790596800000,
+ "yas:GRT": true,
+ "ekstra:GRT": 1790596800000
 }

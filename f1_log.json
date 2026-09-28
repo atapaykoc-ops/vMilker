@@ -514,5 +514,27 @@
   "cikis": 0.05516,
   "pnl": 0.01892,
   "golge": 0.02862
+ },
+ {
+  "kural": "genis",
+  "coin": "GRT",
+  "derin": true,
+  "giris_ts": 1790596800000,
+  "giris": 0.03115,
+  "v1": 0.68,
+  "cikis_ts": 1790683200000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "GRT",
+  "derin": true,
+  "giris_ts": 1790596800000,
+  "giris": 0.03115,
+  "v1": 0.68,
+  "cikis_ts": 1790683200000,
+  "cikis": null,
+  "pnl": null
  }
 ]
