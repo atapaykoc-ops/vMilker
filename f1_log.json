@@ -536,5 +536,27 @@
   "cikis_ts": 1790683200000,
   "cikis": null,
   "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "IOTA",
+  "derin": true,
+  "giris_ts": 1790625600000,
+  "giris": 0.05583,
+  "v1": 0.774,
+  "cikis_ts": 1790712000000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "IOTA",
+  "derin": true,
+  "giris_ts": 1790625600000,
+  "giris": 0.05583,
+  "v1": 0.774,
+  "cikis_ts": 1790712000000,
+  "cikis": null,
+  "pnl": null
  }
 ]

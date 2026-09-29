@@ -57,5 +57,8 @@
  "ekstra:AEON": 1789732800000,
  "genis:GRT": 1790596800000,
  "yas:GRT": true,
- "ekstra:GRT": 1790596800000
+ "ekstra:GRT": 1790596800000,
+ "genis:IOTA": 1790625600000,
+ "yas:IOTA": true,
+ "ekstra:IOTA": 1790625600000
 }
