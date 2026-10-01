@@ -60,5 +60,8 @@
  "ekstra:GRT": 1790596800000,
  "genis:IOTA": 1790625600000,
  "yas:IOTA": true,
- "ekstra:IOTA": 1790625600000
+ "ekstra:IOTA": 1790625600000,
+ "genis:STX": 1790841600000,
+ "yas:STX": true,
+ "ekstra:STX": 1790841600000
 }

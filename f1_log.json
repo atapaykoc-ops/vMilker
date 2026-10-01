@@ -562,5 +562,27 @@
   "cikis": 0.05225,
   "pnl": 0.06262,
   "golge": 0.08874
+ },
+ {
+  "kural": "genis",
+  "coin": "STX",
+  "derin": true,
+  "giris_ts": 1790841600000,
+  "giris": 0.3788,
+  "v1": 0.79,
+  "cikis_ts": 1790928000000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "STX",
+  "derin": true,
+  "giris_ts": 1790841600000,
+  "giris": 0.3788,
+  "v1": 0.79,
+  "cikis_ts": 1790928000000,
+  "cikis": null,
+  "pnl": null
  }
 ]
