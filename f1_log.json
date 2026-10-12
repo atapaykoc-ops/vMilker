@@ -586,5 +586,38 @@
   "cikis": 0.3651,
   "pnl": 0.03467,
   "golge": 0.04421
+ },
+ {
+  "kural": "donuk",
+  "coin": "W",
+  "derin": true,
+  "giris_ts": 1791806400000,
+  "giris": 0.0241,
+  "v1": 0.711,
+  "cikis_ts": 1791892800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "genis",
+  "coin": "W",
+  "derin": true,
+  "giris_ts": 1791806400000,
+  "giris": 0.0241,
+  "v1": 0.711,
+  "cikis_ts": 1791892800000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "W",
+  "derin": true,
+  "giris_ts": 1791806400000,
+  "giris": 0.0241,
+  "v1": 0.711,
+  "cikis_ts": 1791892800000,
+  "cikis": null,
+  "pnl": null
  }
 ]

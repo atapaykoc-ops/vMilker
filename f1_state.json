@@ -63,5 +63,9 @@
  "ekstra:IOTA": 1790625600000,
  "genis:STX": 1790841600000,
  "yas:STX": true,
- "ekstra:STX": 1790841600000
+ "ekstra:STX": 1790841600000,
+ "donuk:W": 1791806400000,
+ "yas:W": true,
+ "genis:W": 1791806400000,
+ "ekstra:W": 1791806400000
 }
