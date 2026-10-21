@@ -622,5 +622,27 @@
   "cikis": 0.016815,
   "pnl": 0.30078,
   "golge": 0.30769
+ },
+ {
+  "kural": "genis",
+  "coin": "MEW",
+  "derin": true,
+  "giris_ts": 1792569600000,
+  "giris": 0.0004985,
+  "v1": 0.812,
+  "cikis_ts": 1792656000000,
+  "cikis": null,
+  "pnl": null
+ },
+ {
+  "kural": "ekstra",
+  "coin": "MEW",
+  "derin": true,
+  "giris_ts": 1792569600000,
+  "giris": 0.0004985,
+  "v1": 0.812,
+  "cikis_ts": 1792656000000,
+  "cikis": null,
+  "pnl": null
  }
 ]
