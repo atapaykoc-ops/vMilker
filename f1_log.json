@@ -646,5 +646,16 @@
   "cikis": 0.0004502,
   "pnl": 0.09539,
   "golge": 0.10433
+ },
+ {
+  "kural": "ekstra",
+  "coin": "BIGTIME",
+  "derin": true,
+  "giris_ts": 1792843200000,
+  "giris": 0.006562,
+  "v1": 0.827,
+  "cikis_ts": 1792929600000,
+  "cikis": null,
+  "pnl": null
  }
 ]

@@ -70,5 +70,7 @@
  "ekstra:W": 1791806400000,
  "genis:MEW": 1792569600000,
  "yas:MEW": true,
- "ekstra:MEW": 1792569600000
+ "ekstra:MEW": 1792569600000,
+ "ekstra:BIGTIME": 1792843200000,
+ "yas:BIGTIME": true
 }
