@@ -682,5 +682,16 @@
   "cikis": 0.3105,
   "pnl": 0.0369,
   "golge": 0.04642
+ },
+ {
+  "kural": "ekstra",
+  "coin": "HUMA",
+  "derin": false,
+  "giris_ts": 1794902400000,
+  "giris": 0.008425,
+  "v1": 0.773,
+  "cikis_ts": 1794988800000,
+  "cikis": null,
+  "pnl": null
  }
 ]
